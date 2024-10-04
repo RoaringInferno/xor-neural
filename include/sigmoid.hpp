@@ -1,3 +1,12 @@
+/**
+ * @file sigmoid.hpp
+ * 
+ * @brief A header file that contains the sigmoid function and its derivatives.
+ * 
+ * Defines a macro "SIGMOID_LAMBDA" that can be used to apply the sigmoid function.
+ * The lambda takes in a const float reference and returns a float.
+ */
+
 #pragma once
 
 #include <math.h>
@@ -14,21 +23,21 @@
 // #define SIGMOID_USE_FABS
 
 #ifdef SIGMOID_USE_ATAN
-#define SIGMOID_LAMBDA [](float x) -> float { return M_PI_2_INV*atan(M_PI_2*x); }
+#define SIGMOID_LAMBDA [](const float &x) -> float { return M_PI_2_INV*atan(M_PI_2*x); }
 #endif
 
 #ifdef SIGMOID_USE_EXP
-#define SIGMOID_LAMBDA [](float x) -> float { return 1.0/(1.0 + exp(-x)); }
+#define SIGMOID_LAMBDA [](const float &x) -> float { return 1.0/(1.0 + exp(-x)); }
 #endif
 
 #ifdef SIGMOID_USE_SQRT
-#define SIGMOID_LAMBDA [](float x) -> float { return 1.0/sqrt(1.0 + x*x); }
+#define SIGMOID_LAMBDA [](const float &x) -> float { return 1.0/sqrt(1.0 + x*x); }
 #endif
 
 #ifdef SIGMOID_USE_ERF
-#define SIGMOID_LAMBDA [](float x) -> float { return erf(ERF_COEF*x); }
+#define SIGMOID_LAMBDA [](const float &x) -> float { return erf(ERF_COEF*x); }
 #endif
 
 #ifdef SIGMOID_USE_FABS
-#define SIGMOID_LAMBDA [](float x) -> float { return x/(1.0 + fabs(x)); }
+#define SIGMOID_LAMBDA [](const float &x) -> float { return x/(1.0 + fabs(x)); }
 #endif

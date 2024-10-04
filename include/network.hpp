@@ -30,8 +30,8 @@ namespace neural
          */
         struct training_data_set_t
         {
-            std::vector<Col<float>> inputs;
-            std::vector<Col<float>> expected_outputs;
+            std::vector<arma::Col<float>> inputs;
+            std::vector<arma::Col<float>> expected_outputs;
         };
     private:
         /**
@@ -43,8 +43,8 @@ namespace neural
          */
         struct gradient_t
         {
-            Mat<float>* d_weights;
-            Col<float>* d_biases;
+            arma::Mat<float>* d_weights;
+            arma::Col<float>* d_biases;
 
             gradient_t(const depth_t& depth);
             ~gradient_t();
@@ -65,7 +65,7 @@ namespace neural
         layer::width_t get_input_width() const;
         layer::width_t get_output_width() const;
 
-        Col<float> evaluate(const Col<float>& input);
+        arma::Col<float> evaluate(const arma::Col<float>& input);
         float cost(const training_data_set_t& training_data);
 
         void train(const training_data_set_t& training_data, const float& learning_rate);
