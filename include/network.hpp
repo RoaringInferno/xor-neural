@@ -2,6 +2,8 @@
 
 #include "layer.hpp"
 
+#include <vector>
+
 namespace neural
 {
     /**
@@ -17,6 +19,36 @@ namespace neural
     // Typedefs
     public:
         typedef unsigned short depth_t;
+    // Structs
+    public:
+        /**
+         * @struct training_data_set_t
+         * 
+         * @brief A struct that represents the training data for a network.
+         * 
+         * Simply a data wrapper.
+         */
+        struct training_data_set_t
+        {
+            std::vector<Col<float>> inputs;
+            std::vector<Col<float>> expected_outputs;
+        };
+    private:
+        /**
+         * @struct gradient_t
+         * 
+         * @brief A struct that represents the gradient of a network.
+         * 
+         * Simply a data wrapper.
+         */
+        struct gradient_t
+        {
+            Mat<float>* d_weights;
+            Col<float>* d_biases;
+
+            gradient_t(const depth_t& depth);
+            ~gradient_t();
+        };
     // Members
     private:
         depth_t depth;
@@ -28,10 +60,14 @@ namespace neural
         ~network();
     // Methods
     private:
+        gradient_t backpropagate(const training_data_set_t& training_data);
     public:
         layer::width_t get_input_width() const;
         layer::width_t get_output_width() const;
 
         Col<float> evaluate(const Col<float>& input);
+        float cost(const training_data_set_t& training_data);
+
+        void train(const training_data_set_t& training_data, const float& learning_rate);
     };
 }
