@@ -39,9 +39,6 @@ namespace neural
         layer(const width_t& input_width, const width_t& output_width);
         ~layer();
     // Methods
-    private:
-        width_t get_output_width() const;
-        width_t get_input_width() const;
     public:
         /**
          * @brief Evaluate the layer with the given input.
@@ -58,5 +55,8 @@ namespace neural
 
         void set_weights(const arma::Mat<float>& _weights);
         void set_biases(const arma::Col<float>& _biases);
+
+        width_t get_output_width() const;
+        width_t get_input_width() const;
     };
 }

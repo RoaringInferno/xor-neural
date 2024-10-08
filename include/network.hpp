@@ -19,8 +19,16 @@ namespace neural
     // Typedefs
     public:
         typedef unsigned short depth_t;
+
+        typedef const arma::Col<float>& data_col_t;
     // Structs
-    public:
+
+        struct training_data_t
+        {
+            arma::Col<float> input;
+            arma::Col<float> expected_output;
+        };
+
         /**
          * @struct training_data_set_t
          * 
@@ -30,8 +38,7 @@ namespace neural
          */
         struct training_data_set_t
         {
-            std::vector<arma::Col<float>> inputs;
-            std::vector<arma::Col<float>> expected_outputs;
+            std::vector<training_data_t> data_points;
         };
     private:
         /**
@@ -51,8 +58,8 @@ namespace neural
         };
     // Members
     private:
-        depth_t depth;
-        layer* layers;
+        depth_t depth; // Count of layers, counting the output layer
+        layer* layers; // Array of layers, ending with the output layer
     // Constructors
     public:
         network();
@@ -65,7 +72,8 @@ namespace neural
         layer::width_t get_input_width() const;
         layer::width_t get_output_width() const;
 
-        arma::Col<float> evaluate(const arma::Col<float>& input);
+        arma::Col<float> forward_propagate(data_col_t input);
+        float cost(training_data_t training_data);
         float cost(const training_data_set_t& training_data);
 
         void train(const training_data_set_t& training_data, const float& learning_rate);

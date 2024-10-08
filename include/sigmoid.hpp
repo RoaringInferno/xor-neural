@@ -41,3 +41,9 @@
 #ifdef SIGMOID_USE_FABS
 #define SIGMOID_LAMBDA [](const float &x) -> float { return x/(1.0 + fabs(x)); }
 #endif
+
+#define SIGMOID_USE_ATAN
+#define SIGMOID_USE_EXP
+#define SIGMOID_USE_SQRT
+#define SIGMOID_USE_ERF
+#define SIGMOID_USE_FABS
