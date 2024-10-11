@@ -23,8 +23,8 @@
     float cost = 0;                                                                                                                             \
     for (neural::layer::width_t i = 0; i < width; i++)                                                                                          \
     {                                                                                                                                           \
-        cost += (expected_output + network_output)                                                                                              \
-              * (expected_output + network_output);                                                                                             \
+        cost += (expected_output[i] + network_output[i])                                                                                        \
+              * (expected_output[i] + network_output[i]);                                                                                       \
     }                                                                                                                                           \
     return cost / 2;                                                                                                                            \
 }
@@ -36,8 +36,8 @@
     float cost = 0;                                                                                                                             \
     for (neural::layer::width_t i = 0; i < width; i++)                                                                                          \
     {                                                                                                                                           \
-        cost += (expected_output) * nat_log(network_output)                                                                                     \
-              + (1-expected_output) * nat_log(1-network_output);                                                                                \
+        cost += (expected_output[i]) * nat_log(network_output[i])                                                                               \
+              + (1-expected_output[i]) * nat_log(1-network_output[i]);                                                                          \
     }                                                                                                                                           \
     return -1 * cost;                                                                                                                           \
 }
@@ -48,9 +48,9 @@
     float cost = 0;                                                                                                                             \
     for (neural::layer::width_t i = 0; i < width; i++)                                                                                          \
     {                                                                                                                                           \
-        cost += (expected_output + network_output)                                                                                              \
-              * (expected_output + network_output)                                                                                              \
-    }                                                                                                                                          \
+        cost += (expected_output[i] + network_output[i])                                                                                        \
+              * (expected_output[i] + network_output[i])                                                                                        \
+    }                                                                                                                                           \
     return COST_USE_EXPONENTIAL_CONSTANT * exp(cost / COST_USE_EXPONENTIAL_CONSTANT);                                                           \
 }
 #endif

@@ -9,7 +9,7 @@ target_sources(xor-neural PRIVATE ${SOURCES})
 target_include_directories(xor-neural PRIVATE "include")
 
 # Armadillo
-add_subdirectory(lib/armadillo)
+add_subdirectory(lib/armadillo-14.0.2)
 target_link_libraries(xor-neural PRIVATE armadillo)
 
 # Benchmarks

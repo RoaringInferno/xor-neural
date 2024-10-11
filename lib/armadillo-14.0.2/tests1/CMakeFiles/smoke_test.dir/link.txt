@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -stdlib=libc++ -O2 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/smoke_test.dir/smoke_test.cpp.o -o smoke_test  -Wl,-rpath,/Users/JJ/Downloads/armadillo-14.0.2 ../libarmadillo.14.0.2.dylib -framework Accelerate

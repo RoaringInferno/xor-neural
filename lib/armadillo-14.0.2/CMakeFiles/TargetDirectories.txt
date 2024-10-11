@@ -1,0 +1,16 @@
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/armadillo.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/test.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/edit_cache.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/rebuild_cache.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/list_install_components.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/install.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/install/local.dir
+/Users/JJ/Downloads/armadillo-14.0.2/CMakeFiles/install/strip.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/smoke_test.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/test.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/edit_cache.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/rebuild_cache.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/list_install_components.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/install.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/install/local.dir
+/Users/JJ/Downloads/armadillo-14.0.2/tests1/CMakeFiles/install/strip.dir
