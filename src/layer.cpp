@@ -4,6 +4,12 @@
 
 #include "armadillo"
 
+neural::layer::layer() :
+    weights(),
+    biases()
+{
+}
+
 neural::layer::layer(const width_t &input_width, const width_t &output_width) :
     weights(
         // Random values between -0.5 and 0.5

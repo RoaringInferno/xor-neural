@@ -30,6 +30,7 @@ namespace neural
         arma::Col<float> biases;
     // Constructors
     public:
+        layer();
         /**
          * @brief Construct a new layer object
          * 

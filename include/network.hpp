@@ -52,9 +52,13 @@ namespace neural
         {
             arma::Mat<float>* d_weights;
             arma::Col<float>* d_biases;
+            depth_t depth;
 
             gradient_t(const depth_t& depth);
             ~gradient_t();
+
+            gradient_t& operator+=(const gradient_t& other);
+            gradient_t& operator/=(const float& divisor);
         };
     // Members
     private:
