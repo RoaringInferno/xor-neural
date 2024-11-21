@@ -3,15 +3,25 @@
 #include <array>
 #include <thread>
 #include <numeric>
+#include <algorithm>
 
 namespace xneur
 {
     template <size_t N>
+    class colvec;
+
+    template <size_t N>
+    class rowvec;
+
+    template <size_t M, size_t N>
+    class matrix;
+
+    template <size_t N>
     class colvec : public std::array<float, N>
     {
     public:
-        const row_count = N;
-        const col_count = 1;
+        const size_t row_count = N;
+        const size_t col_count = 1;
     public:
         colvec<N> operator+(const colvec<N> &v) const
         {
@@ -51,14 +61,16 @@ namespace xneur
             std::transform(this->begin(), this->end(), this->begin(), [scalar](float x) { return x * scalar; });
             return *this;
         }
+    
+        float operator*(const rowvec<N> &v) const;
     };
 
     template <size_t N>
     class rowvec : public std::array<float, N>
     {
     public:
-        const row_count = 1;
-        const col_count = N;
+        const size_t row_count = 1;
+        const size_t col_count = N;
     public:
         float operator*(const colvec<N> &v) const
         {
@@ -111,8 +123,8 @@ namespace xneur
     class matrix : public std::array<rowvec<N>, M>
     {
     public:
-        static const row_count = M;
-        static const col_count = N;
+        const size_t row_count = M;
+        const size_t col_count = N;
     public: // Linear algebra
 
         /// @brief Transpose the matrix
@@ -314,8 +326,8 @@ namespace xneur
     class matrix<M, M> : public std::array<rowvec<M>, M>
     {
     public:
-        static const row_count = M;
-        static const col_count = M;
+        const size_t row_count = M;
+        const size_t col_count = M;
     public: // Linear algebra
 
         matrix<M, M> transpose() const
@@ -485,5 +497,11 @@ namespace xneur
         auto cell_begin() const { return this->front().begin(); }
 
         auto cell_end() const { return this->back().end(); }
-    };    
+    };
+
+    template <size_t N>
+    inline float xneur::colvec<N>::operator*(const rowvec<N> &v) const
+    {
+        return std::inner_product(this->begin(), this->end(), v.begin(), float(0));
+    }
 } // namespace xneur

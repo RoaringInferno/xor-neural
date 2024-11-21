@@ -4,6 +4,7 @@
 #include "activation.hpp"
 #include "cost.hpp"
 
+#include <random>
 #include <thread>
 
 namespace xneur
@@ -12,30 +13,30 @@ namespace xneur
     class layer
     {
     public: // Constants
-        static const size_t input_size = input;
-        static const size_t output_size = output;
+        static const size_t input_size = i;
+        static const size_t output_size = o;
     
         typedef matrix<o, i> weight_matrix;
-        typedef colvec<i> input_vector;
-        typedef colvec<o> output_vector;
-        typedef output_vector bias_vector;
+        typedef colvec<i> input_vector_t;
+        typedef colvec<o> output_vector_t;
+        typedef output_vector_t bias_vector;
     private: // Members
         weight_matrix weights;
         bias_vector biases;
     public: // Settings
         const cost_function& COST{cost::mean_squared_error};
     private: // Helper functions
-        output_vector apply_weights(const input_vector &input) const { return weights * input; }
-        output_vector apply_biases(const output_vector &output) const { return output + biases; }
-        output_vector apply_activation(const output_vector &output) const
+        output_vector_t apply_weights(const input_vector_t &input) const { return weights * input; }
+        output_vector_t apply_biases(const output_vector_t &output) const { return output + biases; }
+        output_vector_t apply_activation(const output_vector_t &output) const
         {
-            output_vector result;
+            output_vector_t result;
             std::transform(output.begin(), output.end(), result.begin(), [](float x) { return sigmoid(x); });
             return result;
         }
     public: // Forward propagation
-        output_vector evaluate(const input_vector &input) const { return apply_activation(apply_biases(apply_weights(input))); }
-        output_vector operator()(const input_vector &input) const { return evaluate(input); }
+        output_vector_t evaluate(const input_vector_t &input) const { return apply_activation(apply_biases(apply_weights(input))); }
+        output_vector_t operator()(const input_vector_t &input) const { return evaluate(input); }
     public: // Backpropagation
         struct jacobian
         {
@@ -52,9 +53,9 @@ namespace xneur
          * @return jacobian The jacobian of the layer
          */
         jacobian endpoint_backpropagate(
-			const input_vector &input,
-			const output_vector &output,
-			const output_vector &expected
+			const input_vector_t &input,
+			const output_vector_t &output,
+			const output_vector_t &expected
 		) const
         {
             /*
@@ -65,6 +66,8 @@ namespace xneur
             dL_dW = dL_dY * dY_dA * dA_dW = dL_dY * dY_dA * input = dL_dB * input
             dL_dB = dL_dY * dY_dA * dA_dB = dL_dY * dY_dA
              */
+        
+            jacobian result;
 
             auto compute_output_node_gradient = [&](size_t output_index) {
                 result.biases_gradient[output_index] =
@@ -77,12 +80,11 @@ namespace xneur
                         result.biases_gradient[output_index] // dL_dY * dY_dA
                         * input[input_index]; // dA_dW
                 }
-            }
+            };
 
-            jacobian result;
-            for (size_t i = 0; i < output_vector; i++)
+            for (size_t output_index = 0; output_index < output_size; output_index++)
             {
-                compute_output_node_gradient(i);
+                compute_output_node_gradient(output_index);
             }
             return result;
         }
@@ -96,8 +98,8 @@ namespace xneur
 		 * @return jacobian The jacobian of the layer
          */
 		jacobian chained_backpropagate(
-			const input_vector &input,
-			const output_vector &output,
+			const input_vector_t &input,
+			const output_vector_t &output,
             const bias_vector &delta
         ) const
         {
@@ -110,6 +112,8 @@ namespace xneur
             dL_dB = dL_dY * dY_dA * dA_dB = dL_dY * dY_dA
              */
 
+            jacobian result;
+
             auto compute_output_node_gradient = [&](size_t output_index){
                 result.biases_gradient[output_index] *=
                     output[output_index] * (1.0f - output[output_index]); // dY_dA
@@ -120,17 +124,14 @@ namespace xneur
                         result.biases_gradient[output_index] // dL_dY * dY_dA
                         * input[input_index]; // dA_dW
                 }
-            }
-
-
-            jacobian result;
+            };
 
             // Get the bias gradient(delta)
             result.biases_gradient = delta; // fire together, wire together
 
-            for (size_t i = 0; i < output_vector; i++)
+            for (size_t output_index = 0; output_index < output_size; output_index++)
             {
-                compute_output_node_gradient(i);
+                compute_output_node_gradient(output_index);
             }
             return result;
 		}
