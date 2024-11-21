@@ -1,0 +1,3 @@
+add_executable(sigmoid_benchmark sigmoid_benchmark.cpp)
+
+add_executable(dotprod_optimization dotprod_optimization.cpp)
