@@ -5,6 +5,8 @@ project(xor-neural)
 
 add_subdirectory(int)
 
-#add_executable(${PROJECT_NAME})
-#file(GLOB_RECURSE ${PROJECT_NAME}_SOURCES "src/*.cpp")
-#target_sources(${PROJECT_NAME} PRIVATE ${${PROJECT_NAME}_SOURCES})
+add_library(neural INTERFACE)
+target_include_directories(neural INTERFACE include)
+
+add_executable(${PROJECT_NAME} main.cpp)
+target_link_libraries(${PROJECT_NAME} neural)
